@@ -15,10 +15,20 @@ scalar DateTime
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  removeUser(id: Int!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
+  findOneByParams(email: String, id: Int, name: String, phone: Float): User
   users: [User!]!
+}
+
+input UpdateUserInput {
+  email: String
+  id: Int!
+  name: String
+  phone: Float
 }
 
 type User {
