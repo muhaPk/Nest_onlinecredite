@@ -18,18 +18,31 @@ export class UsersResolver {
     return this.usersService.findAll();
   }
 
-  // @Query(() => User, { name: 'user' })
-  // findOne(@Args('id', { type: () => Int }) id: number) {
-  //   return this.usersService.findOne(id);
-  // }
+  @Query(() => User, { nullable: true })
+  findOneByParams(
+    @Args('id', { type: () => Int, nullable: true }) id?: number,
+    @Args('email', { nullable: true }) email?: string,
+    @Args('name', { nullable: true }) name?: string,
+    @Args('phone', { nullable: true }) phone?: number,
+  ) {
+    // Build the query parameters dynamically based on provided args
+    const queryParams: any = {};
 
-  // @Mutation(() => User)
-  // updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-  //   return this.usersService.update(updateUserInput.id, updateUserInput);
-  // }
+    if (id) queryParams.id = id;
+    if (email) queryParams.email = email;
+    if (name) queryParams.name = name;
+    if (phone) queryParams.phone = phone;
 
-  // @Mutation(() => User)
-  // removeUser(@Args('id', { type: () => Int }) id: number) {
-  //   return this.usersService.remove(id);
-  // }
+    return this.usersService.findOneByParams(queryParams);
+  }
+
+  @Mutation(() => User)
+  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+    return this.usersService.update(updateUserInput.id, updateUserInput);
+  }
+
+  @Mutation(() => User)
+  removeUser(@Args('id', { type: () => Int }) id: number) {
+    return this.usersService.remove(id);
+  }
 }
