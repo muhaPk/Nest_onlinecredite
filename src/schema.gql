@@ -23,6 +23,7 @@ type Mutation {
 
 type Query {
   findOneByParams(email: String, id: Int, name: String, phone: String): User
+
   users: [User!]!
 }
 

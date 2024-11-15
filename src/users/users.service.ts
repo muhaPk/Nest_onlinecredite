@@ -23,6 +23,7 @@ export class UsersService {
 
   }
 
+
   // Playground:
   // mutation CreateUser {
   //   createUser (createUserInput: { email: "user@example.com", name: "user", phone: 333 }) {
@@ -50,6 +51,7 @@ export class UsersService {
       where: params,  // Filter by passed parameters
     });
   }
+
 
   // Playground:
   // query {
@@ -88,6 +90,7 @@ export class UsersService {
     })
   }
 
+
   // Playground:
   // mutation UpdateUser {
   //   updateUser(updateUserInput: { id:1, name: "New Name 3" }) {
@@ -110,6 +113,7 @@ export class UsersService {
       },
     });
   }
+
 
   // Playground:
   // mutation RemoveUser {
