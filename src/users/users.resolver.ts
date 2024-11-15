@@ -23,7 +23,7 @@ export class UsersResolver {
     @Args('id', { type: () => Int, nullable: true }) id?: number,
     @Args('email', { nullable: true }) email?: string,
     @Args('name', { nullable: true }) name?: string,
-    @Args('phone', { nullable: true }) phone?: number,
+    @Args('phone', { nullable: true }) phone?: string,
   ) {
     // Build the query parameters dynamically based on provided args
     const queryParams: any = {};

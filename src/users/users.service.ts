@@ -27,16 +27,12 @@ export class UsersService {
   // mutation CreateUser {
   //   createUser (createUserInput: { email: "user@example.com", name: "user", phone: 333 }) {
   //     id
-  //     email
-  //     name
-  //     phone
-  //     createdAt
   //   }
   // }
 
 
 
-  findAll() {
+  async findAll() {
     return this.prisma.user.findMany()
   }
 
@@ -44,10 +40,6 @@ export class UsersService {
   // query {
   //   users {
   //     id
-  //     email
-  //     name
-  //     phone
-  //     createdAt
   //   }
   // }
 
@@ -63,9 +55,6 @@ export class UsersService {
   // query {
   //   findOneByParams(name: "Jaclin") {
   //     id
-  //     email
-  //     name
-  //     phone
   //   }
   // }
   
@@ -103,11 +92,6 @@ export class UsersService {
   // mutation UpdateUser {
   //   updateUser(updateUserInput: { id:1, name: "New Name 3" }) {
   //     id
-  //     email
-  //     name
-  //     phone
-  //     createdAt
-  //     updatedAt
   //   }
   // }
 
@@ -131,10 +115,8 @@ export class UsersService {
   // mutation RemoveUser {
   //   removeUser(id: 1) {
   //     id
-  //     email
-  //     name
-  //     phoneNumber
   //   }
   // }
+
 
 }

@@ -10,6 +10,6 @@ export class CreateUserInput {
   email: string
 
   @Field()
-  phone: number
+  phone: string
   
 }

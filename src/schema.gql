@@ -5,7 +5,7 @@
 input CreateUserInput {
   email: String!
   name: String!
-  phone: Float!
+  phone: String!
 }
 
 """
@@ -16,11 +16,13 @@ scalar DateTime
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   removeUser(id: Int!): User!
+  sendOtp(phone: String!): Boolean!
   updateUser(updateUserInput: UpdateUserInput!): User!
+  verifyOtp(otp: String!, phone: String!): String!
 }
 
 type Query {
-  findOneByParams(email: String, id: Int, name: String, phone: Float): User
+  findOneByParams(email: String, id: Int, name: String, phone: String): User
   users: [User!]!
 }
 
@@ -28,7 +30,7 @@ input UpdateUserInput {
   email: String
   id: Int!
   name: String
-  phone: Float
+  phone: String
 }
 
 type User {
