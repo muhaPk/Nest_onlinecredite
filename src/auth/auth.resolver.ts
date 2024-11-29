@@ -1,6 +1,7 @@
 // src/auth/auth.resolver.ts
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
+import { VerifyOtpResponse } from './dto/verify-otp-response.dto';
 
 @Resolver()
 export class AuthResolver {
@@ -11,11 +12,11 @@ export class AuthResolver {
     return this.authService.sendOtp(phone);
   }
 
-  @Mutation(() => String)
+  @Mutation(() => VerifyOtpResponse)
   async verifyOtp(
     @Args('phone') phone: string,
     @Args('otp') otp: string
-  ): Promise<string> {
+  ): Promise<VerifyOtpResponse> {
     return this.authService.verifyOtp(phone, otp);
   }
 }

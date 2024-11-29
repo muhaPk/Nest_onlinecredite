@@ -16,6 +16,9 @@ export class User {
   phone: string
 
   @Field()
+  isVerified: boolean
+
+  @Field()
   createdAt: Date
 
   @Field()

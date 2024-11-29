@@ -3,9 +3,10 @@
 # ------------------------------------------------------
 
 input CreateUserInput {
-  email: String!
-  name: String!
-  phone: String!
+  email: String
+  isVerified: Boolean
+  name: String
+  phone: String
 }
 
 """
@@ -18,17 +19,18 @@ type Mutation {
   removeUser(id: Int!): User!
   sendOtp(phone: String!): Boolean!
   updateUser(updateUserInput: UpdateUserInput!): User!
-  verifyOtp(otp: String!, phone: String!): String!
+  verifyOtp(otp: String!, phone: String!): VerifyOtpResponse!
 }
 
 type Query {
-  findOneByParams(email: String, id: Int, name: String, phone: String): User
+  user(email: String, id: Int, isVerified: Boolean, name: String, phone: String): User
   users: [User!]!
 }
 
 input UpdateUserInput {
   email: String
   id: Int!
+  isVerified: Boolean
   name: String
   phone: String
 }
@@ -37,7 +39,13 @@ type User {
   createdAt: DateTime!
   email: String!
   id: Int!
+  isVerified: Boolean!
   name: String!
   phone: String!
   updatedAt: DateTime!
+}
+
+type VerifyOtpResponse {
+  accessToken: String!
+  userId: Int!
 }

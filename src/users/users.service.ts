@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 
 
@@ -17,7 +16,9 @@ export class UsersService {
         email: true,
         name: true,
         phone: true,
+        isVerified: true,
         createdAt: true,
+        updatedAt: true,
       },
     });
 
@@ -55,7 +56,7 @@ export class UsersService {
 
   // Playground:
   // query {
-  //   findOneByParams(name: "Jaclin") {
+  //   user(name: "Jaclin") {
   //     id
   //   }
   // }
@@ -73,7 +74,11 @@ export class UsersService {
       data.name = updateUserInput.name;
     }
     if (updateUserInput.phone) {
-      data.phoneNumber = updateUserInput.phone;
+      data.phone = updateUserInput.phone;
+    }
+    
+    if (updateUserInput.isVerified !== undefined) {
+      data.isVerified = updateUserInput.isVerified;
     }
 
     return this.prisma.user.update({
@@ -84,6 +89,7 @@ export class UsersService {
         email: true,
         name: true,
         phone: true,
+        isVerified: true,
         createdAt: true,
         updatedAt: true,
       },

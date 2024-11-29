@@ -1,9 +1,13 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { UserFilterInput } from './dto/user-filter.input';
+import { GqlAuthGuard } from 'src/guards/gql-auth.guard';
 
+@UseGuards(GqlAuthGuard)
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
@@ -18,12 +22,14 @@ export class UsersResolver {
     return this.usersService.findAll();
   }
 
-  @Query(() => User, { nullable: true })
+  // вынести в dto
+  @Query(() => User, { name: 'user', nullable: true })
   findOneByParams(
     @Args('id', { type: () => Int, nullable: true }) id?: number,
     @Args('email', { nullable: true }) email?: string,
     @Args('name', { nullable: true }) name?: string,
     @Args('phone', { nullable: true }) phone?: string,
+    @Args('isVerified', { nullable: true }) isVerified?: boolean,
   ) {
     // Build the query parameters dynamically based on provided args
     const queryParams: any = {};
@@ -32,6 +38,7 @@ export class UsersResolver {
     if (email) queryParams.email = email;
     if (name) queryParams.name = name;
     if (phone) queryParams.phone = phone;
+    if (isVerified) queryParams.isVerified = isVerified;
 
     return this.usersService.findOneByParams(queryParams);
   }

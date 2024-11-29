@@ -1,9 +1,10 @@
 // auth.service.ts
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma.service';
 import * as twilio from 'twilio';
 import { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN } from 'src/config/consts';
+import { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } from 'src/config/consts';
 
 @Injectable()
 export class AuthService {
@@ -49,7 +50,8 @@ export class AuthService {
     return true;
   }
 
-  async verifyOtp(phone: string, otp: string): Promise<string> {
+  async verifyOtp(phone: string, otp: string): Promise<{ accessToken: string; userId: number }> {
+
     const user = await this.prisma.user.findFirst({ where: { phone } });
 
     if (!user) {
@@ -61,7 +63,7 @@ export class AuthService {
     });
 
     if (!otpEntry || otpEntry.otpCode !== otp || otpEntry.expiresAt < new Date()) {
-    throw new BadRequestException('Invalid or expired OTP');
+        throw new BadRequestException('Invalid or expired OTP');
     }
 
     await this.prisma.otpCode.delete({ where: { userId: user.id } });
@@ -74,7 +76,39 @@ export class AuthService {
 
     // Generate JWT token
     const payload = { sub: user.id, phone: user.phone };
-    return this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload);
+
+    return { accessToken, userId: user.id }
   }
+
+
+  async refreshToken(refreshToken: string): Promise<{ accessToken: string; refreshToken: string }> {
+    try {
+      // Verify the refresh token
+      const decoded = this.jwtService.verify(refreshToken, { secret: REFRESH_SECRET_KEY });
+
+      const user = await this.prisma.user.findUnique({
+        where: { id: decoded.sub },
+      });
+
+      if (!user) throw new UnauthorizedException('User not found');
+
+      // Issue new tokens
+      const newAccessToken = this.jwtService.sign(
+        { sub: user.id, phone: user.phone },
+        { secret: ACCESS_SECRET_KEY, expiresIn: '15m' },
+      );
+
+      const newRefreshToken = this.jwtService.sign(
+        { sub: user.id, phone: user.phone },
+        { secret: REFRESH_SECRET_KEY, expiresIn: '7d' },
+      );
+
+      return { accessToken: newAccessToken, refreshToken: newRefreshToken };
+    } catch (e) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+  }
+
 
 }
