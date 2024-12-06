@@ -4,7 +4,13 @@ import { InputType, Field } from '@nestjs/graphql';
 export class CreateUserInput {
 
   @Field({ nullable: true })
+  idPassport?: string
+
+  @Field({ nullable: true })
   name?: string
+
+  @Field({ nullable: true })
+  surname?: string
 
   @Field({ nullable: true })
   email?: string

@@ -4,9 +4,11 @@
 
 input CreateUserInput {
   email: String
+  idPassport: String
   isVerified: Boolean
   name: String
   phone: String
+  surname: String
 }
 
 """
@@ -23,29 +25,34 @@ type Mutation {
 }
 
 type Query {
-  user(email: String, id: Int, isVerified: Boolean, name: String, phone: String): User
+  user(email: String, id: Int, idPassport: String, isVerified: Boolean, name: String, phone: String): User
   users: [User!]!
 }
 
 input UpdateUserInput {
   email: String
   id: Int!
+  idPassport: String
   isVerified: Boolean
   name: String
   phone: String
+  surname: String
 }
 
 type User {
   createdAt: DateTime!
   email: String!
   id: Int!
+  idPassport: String!
   isVerified: Boolean!
   name: String!
   phone: String!
+  surname: String!
   updatedAt: DateTime!
 }
 
 type VerifyOtpResponse {
   accessToken: String!
+  refreshToken: String!
   userId: Int!
 }

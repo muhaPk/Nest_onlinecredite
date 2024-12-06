@@ -6,10 +6,16 @@ export class UserFilterInput {
   id?: number;
 
   @Field({ nullable: true })
+  idPassport?: string;
+
+  @Field({ nullable: true })
   email?: string;
 
   @Field({ nullable: true })
   name?: string;
+
+  @Field({ nullable: true })
+  surname?: string;
 
   @Field({ nullable: true })
   phone?: string;

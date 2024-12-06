@@ -4,10 +4,9 @@ import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { UserFilterInput } from './dto/user-filter.input';
 import { GqlAuthGuard } from 'src/guards/gql-auth.guard';
 
-@UseGuards(GqlAuthGuard)
+
 @Resolver(() => User)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
@@ -17,15 +16,17 @@ export class UsersResolver {
     return this.usersService.create(createUserInput);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Query(() => [User], { name: 'users' })
   findAll() {
     return this.usersService.findAll();
   }
 
-  // вынести в dto
+  @UseGuards(GqlAuthGuard)
   @Query(() => User, { name: 'user', nullable: true })
   findOneByParams(
     @Args('id', { type: () => Int, nullable: true }) id?: number,
+    @Args('idPassport', { nullable: true }) idPassport?: string,
     @Args('email', { nullable: true }) email?: string,
     @Args('name', { nullable: true }) name?: string,
     @Args('phone', { nullable: true }) phone?: string,
@@ -35,6 +36,7 @@ export class UsersResolver {
     const queryParams: any = {};
 
     if (id) queryParams.id = id;
+    if (idPassport) queryParams.idPassport = idPassport;
     if (email) queryParams.email = email;
     if (name) queryParams.name = name;
     if (phone) queryParams.phone = phone;
@@ -43,11 +45,13 @@ export class UsersResolver {
     return this.usersService.findOneByParams(queryParams);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.usersService.update(updateUserInput.id, updateUserInput);
   }
 
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => User)
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.remove(id);

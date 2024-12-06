@@ -50,7 +50,7 @@ export class AuthService {
     return true;
   }
 
-  async verifyOtp(phone: string, otp: string): Promise<{ accessToken: string; userId: number }> {
+  async verifyOtp(phone: string, otp: string): Promise<{ accessToken: string; refreshToken: string, userId: number }> {
 
     const user = await this.prisma.user.findFirst({ where: { phone } });
 
@@ -75,10 +75,16 @@ export class AuthService {
     });
 
     // Generate JWT token
-    const payload = { sub: user.id, phone: user.phone };
-    const accessToken = this.jwtService.sign(payload);
+    const payload = { sub: user.id, phone: user.phone }
+    const accessToken = this.jwtService.sign(payload, {
+      expiresIn: '15m'
+    })
 
-    return { accessToken, userId: user.id }
+    const refreshToken = this.jwtService.sign(payload, {
+      expiresIn: '7d', // Example: 7 days
+    })
+
+    return { accessToken, refreshToken, userId: user.id }
   }
 
 

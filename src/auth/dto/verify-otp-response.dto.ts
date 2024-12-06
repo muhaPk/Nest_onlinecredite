@@ -5,6 +5,9 @@ export class VerifyOtpResponse {
   @Field()
   accessToken: string;
 
+  @Field()
+  refreshToken: string;
+
   @Field(() => Int)
   userId: number;
 }

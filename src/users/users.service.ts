@@ -13,8 +13,10 @@ export class UsersService {
       data,
       select: {
         id: true,
+        idPassport: true,
         email: true,
         name: true,
+        surname: true,
         phone: true,
         isVerified: true,
         createdAt: true,
@@ -70,8 +72,14 @@ export class UsersService {
     if (updateUserInput.email) {
       data.email = updateUserInput.email;
     }
+    if (updateUserInput.idPassport) {
+      data.idPassport = updateUserInput.idPassport;
+    }
     if (updateUserInput.name) {
       data.name = updateUserInput.name;
+    }
+    if (updateUserInput.surname) {
+      data.surname = updateUserInput.surname;
     }
     if (updateUserInput.phone) {
       data.phone = updateUserInput.phone;
@@ -86,8 +94,10 @@ export class UsersService {
       data,
       select: {
         id: true,
+        idPassport: true,
         email: true,
         name: true,
+        surname: true,
         phone: true,
         isVerified: true,
         createdAt: true,
@@ -111,8 +121,10 @@ export class UsersService {
       where: { id },  // Find and delete user by id
       select: {
         id: true,
+        idPassport: true,
         email: true,
         name: true,
+        surname: true,
         phone: true,
         createdAt: true,
         updatedAt: true,
