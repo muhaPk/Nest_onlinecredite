@@ -4,16 +4,28 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 export class User {
 
   @Field(() => Int)
-  id: number;
+  id: number
+
+  @Field()
+  idPassport: string | null
 
   @Field()
   name: string
+
+  @Field()
+  surname: string
 
   @Field()
   email: string
 
   @Field()
   phone: string
+
+  @Field()
+  imgPassport: string
+
+  @Field()
+  isVerified: boolean
 
   @Field()
   createdAt: Date

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 
 
@@ -14,38 +13,38 @@ export class UsersService {
       data,
       select: {
         id: true,
+        idPassport: true,
         email: true,
         name: true,
+        surname: true,
         phone: true,
+        imgPassport: true,
+        isVerified: true,
         createdAt: true,
+        updatedAt: true,
       },
     });
 
   }
 
+
+  // Playground:
   // mutation CreateUser {
   //   createUser (createUserInput: { email: "user@example.com", name: "user", phone: 333 }) {
   //     id
-  //     email
-  //     name
-  //     phone
-  //     createdAt
   //   }
   // }
 
 
 
-  findAll() {
+  async findAll() {
     return this.prisma.user.findMany()
   }
 
+  // Playground:
   // query {
   //   users {
   //     id
-  //     email
-  //     name
-  //     phone
-  //     createdAt
   //   }
   // }
 
@@ -57,12 +56,11 @@ export class UsersService {
     });
   }
 
+
+  // Playground:
   // query {
-  //   findOneByParams(name: "Jaclin") {
+  //   user(name: "Jaclin") {
   //     id
-  //     email
-  //     name
-  //     phone
   //   }
   // }
   
@@ -75,11 +73,23 @@ export class UsersService {
     if (updateUserInput.email) {
       data.email = updateUserInput.email;
     }
+    if (updateUserInput.idPassport) {
+      data.idPassport = updateUserInput.idPassport;
+    }
     if (updateUserInput.name) {
       data.name = updateUserInput.name;
     }
+    if (updateUserInput.surname) {
+      data.surname = updateUserInput.surname;
+    }
     if (updateUserInput.phone) {
-      data.phoneNumber = updateUserInput.phone;
+      data.phone = updateUserInput.phone;
+    }
+    if (updateUserInput.imgPassport) {
+      data.imgPassport = updateUserInput.imgPassport;
+    }
+    if (updateUserInput.isVerified !== undefined) {
+      data.isVerified = updateUserInput.isVerified;
     }
 
     return this.prisma.user.update({
@@ -87,23 +97,24 @@ export class UsersService {
       data,
       select: {
         id: true,
+        idPassport: true,
         email: true,
         name: true,
+        surname: true,
         phone: true,
+        imgPassport: true,
+        isVerified: true,
         createdAt: true,
         updatedAt: true,
       },
     })
   }
 
+
+  // Playground:
   // mutation UpdateUser {
   //   updateUser(updateUserInput: { id:1, name: "New Name 3" }) {
   //     id
-  //     email
-  //     name
-  //     phone
-  //     createdAt
-  //     updatedAt
   //   }
   // }
 
@@ -114,22 +125,27 @@ export class UsersService {
       where: { id },  // Find and delete user by id
       select: {
         id: true,
+        idPassport: true,
         email: true,
         name: true,
+        surname: true,
         phone: true,
+        imgPassport: true,
         createdAt: true,
         updatedAt: true,
       },
     });
   }
 
+
+  // Playground:
   // mutation RemoveUser {
   //   removeUser(id: 1) {
   //     id
-  //     email
-  //     name
-  //     phoneNumber
   //   }
   // }
+
+
+
 
 }

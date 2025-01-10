@@ -3,9 +3,13 @@
 # ------------------------------------------------------
 
 input CreateUserInput {
-  email: String!
-  name: String!
-  phone: Float!
+  email: String
+  idPassport: String
+  imgPassport: String
+  isVerified: Boolean
+  name: String
+  phone: String
+  surname: String
 }
 
 """
@@ -16,26 +20,46 @@ scalar DateTime
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   removeUser(id: Int!): User!
+  sendOtp(phone: String!): Boolean!
   updateUser(updateUserInput: UpdateUserInput!): User!
+  uploadUserPassport(file: Upload!, id: Int!): Boolean!
+  verifyOtp(otp: String!, phone: String!): VerifyOtpResponse!
 }
 
 type Query {
-  findOneByParams(email: String, id: Int, name: String, phone: Float): User
+  user(email: String, id: Int, idPassport: String, imgPassport: String, isVerified: Boolean, name: String, phone: String): User
   users: [User!]!
 }
 
 input UpdateUserInput {
   email: String
   id: Int!
+  idPassport: String
+  imgPassport: String
+  isVerified: Boolean
   name: String
-  phone: Float
+  phone: String
+  surname: String
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 type User {
   createdAt: DateTime!
   email: String!
   id: Int!
+  idPassport: String!
+  imgPassport: String!
+  isVerified: Boolean!
   name: String!
   phone: String!
+  surname: String!
   updatedAt: DateTime!
+}
+
+type VerifyOtpResponse {
+  accessToken: String!
+  refreshToken: String!
+  userId: Int!
 }
