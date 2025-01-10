@@ -17,15 +17,14 @@ export class AuthService {
 
   async sendOtp(phone: string): Promise<boolean> {
 
-    const otpCode = Math.floor(1000 + Math.random() * 9000).toString();
-    console.log(`OTP Code: ${otpCode}`); // For testing
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // Expires in 5 minutes
-
-
     const user = await this.prisma.user.findUnique({ where: { phone } });
     if (!user) {
         throw new BadRequestException('User not found');
       }
+
+    const otpCode = Math.floor(1000 + Math.random() * 9000).toString();
+    console.log(`OTP Code: ${otpCode}`); // For testing
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // Expires in 5 minutes
 
     await this.prisma.otpCode.upsert({
         where: { userId: user.id },

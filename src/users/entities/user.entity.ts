@@ -22,6 +22,9 @@ export class User {
   phone: string
 
   @Field()
+  imgPassport: string
+
+  @Field()
   isVerified: boolean
 
   @Field()

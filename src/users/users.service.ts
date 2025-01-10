@@ -18,6 +18,7 @@ export class UsersService {
         name: true,
         surname: true,
         phone: true,
+        imgPassport: true,
         isVerified: true,
         createdAt: true,
         updatedAt: true,
@@ -84,7 +85,9 @@ export class UsersService {
     if (updateUserInput.phone) {
       data.phone = updateUserInput.phone;
     }
-    
+    if (updateUserInput.imgPassport) {
+      data.imgPassport = updateUserInput.imgPassport;
+    }
     if (updateUserInput.isVerified !== undefined) {
       data.isVerified = updateUserInput.isVerified;
     }
@@ -99,6 +102,7 @@ export class UsersService {
         name: true,
         surname: true,
         phone: true,
+        imgPassport: true,
         isVerified: true,
         createdAt: true,
         updatedAt: true,
@@ -126,6 +130,7 @@ export class UsersService {
         name: true,
         surname: true,
         phone: true,
+        imgPassport: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -139,6 +144,8 @@ export class UsersService {
   //     id
   //   }
   // }
+
+
 
 
 }

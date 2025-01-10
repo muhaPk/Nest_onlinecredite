@@ -19,6 +19,9 @@ export class CreateUserInput {
   phone?: string
 
   @Field({ nullable: true })
+  imgPassport?: string
+
+  @Field({ nullable: true })
   isVerified?: boolean
   
 }
