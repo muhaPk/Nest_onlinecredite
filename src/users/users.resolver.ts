@@ -4,7 +4,7 @@ import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { GqlAuthGuard } from 'src/guards/gql-auth.guard';
+import { GqlAuthGuard } from '../guards/gql-auth.guard';
 import { createWriteStream } from 'fs';
 import * as fs from 'fs';
 import { join } from 'path';

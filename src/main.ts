@@ -15,7 +15,7 @@ async function bootstrap() {
 
   app.use(graphqlUploadExpress({maxFileSize: 1000000, maxFiles: 10 }));
 
-  app.setGlobalPrefix('api');
+  // app.setGlobalPrefix('api');
   await app.listen(process.env.SERVER_PORT || 4200, '0.0.0.0');
 }
 bootstrap();

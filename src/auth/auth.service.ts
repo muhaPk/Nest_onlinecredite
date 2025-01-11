@@ -1,14 +1,14 @@
 // auth.service.ts
 import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/prisma.service';
-import * as twilio from 'twilio';
-import { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN } from 'src/config/consts';
-import { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } from 'src/config/consts';
+import { PrismaService } from '../prisma.service';
+// import Twilio from 'twilio';
+import { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN } from '../config/consts';
+import { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } from '../config/consts';
 
 @Injectable()
 export class AuthService {
-  private twilioClient = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+  // private twilioClient = Twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
   constructor(
     private readonly prisma: PrismaService,

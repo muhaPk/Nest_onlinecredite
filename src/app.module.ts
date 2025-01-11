@@ -7,11 +7,13 @@ import { join } from 'path';
 // @ts-ignore
 import { GraphQLUpload } from 'graphql-upload';
 
+import { AppController } from './app.controller';
+
 @Module({
     imports: [
       GraphQLModule.forRoot<ApolloDriverConfig>({
         driver: ApolloDriver,
-        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+        autoSchemaFile: join(process.cwd(), './schema.gql'),
         sortSchema: true,
         resolvers: { Upload: GraphQLUpload }, // Add this
         //csrfPrevention: false, // Disable CSRF prevention
@@ -19,5 +21,6 @@ import { GraphQLUpload } from 'graphql-upload';
       UsersModule,
       AuthModule,
     ],
+    controllers: [AppController],
   })
   export class AppModule {}
