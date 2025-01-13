@@ -22,7 +22,8 @@ export class AuthService {
         throw new BadRequestException('User not found');
       }
 
-    const otpCode = Math.floor(1000 + Math.random() * 9000).toString();
+    // const otpCode = Math.floor(1000 + Math.random() * 9000).toString();
+    const otpCode = '1111'
     console.log(`OTP Code: ${otpCode}`); // For testing
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // Expires in 5 minutes
 
