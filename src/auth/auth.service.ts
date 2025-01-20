@@ -24,7 +24,7 @@ export class AuthService {
 
     // const otpCode = Math.floor(1000 + Math.random() * 9000).toString();
     const otpCode = '1111'
-    console.log(`OTP Code: ${otpCode}`); // For testing
+    // console.log(`OTP Code: ${otpCode}`);
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // Expires in 5 minutes
 
     await this.prisma.otpCode.upsert({
@@ -76,11 +76,14 @@ export class AuthService {
 
     // Generate JWT token
     const payload = { sub: user.id, phone: user.phone }
+
     const accessToken = this.jwtService.sign(payload, {
-      expiresIn: '15m'
+      secret: ACCESS_SECRET_KEY, 
+      expiresIn: '1m' // 15m
     })
 
     const refreshToken = this.jwtService.sign(payload, {
+      secret: REFRESH_SECRET_KEY, 
       expiresIn: '7d', // Example: 7 days
     })
 
@@ -89,6 +92,7 @@ export class AuthService {
 
 
   async refreshToken(refreshToken: string): Promise<{ accessToken: string; refreshToken: string }> {
+
     try {
       // Verify the refresh token
       const decoded = this.jwtService.verify(refreshToken, { secret: REFRESH_SECRET_KEY });
@@ -96,13 +100,14 @@ export class AuthService {
       const user = await this.prisma.user.findUnique({
         where: { id: decoded.sub },
       });
+      console.log('user ' + user)
 
       if (!user) throw new UnauthorizedException('User not found');
 
       // Issue new tokens
       const newAccessToken = this.jwtService.sign(
         { sub: user.id, phone: user.phone },
-        { secret: ACCESS_SECRET_KEY, expiresIn: '15m' },
+        { secret: ACCESS_SECRET_KEY, expiresIn: '1m' }, // 15m
       );
 
       const newRefreshToken = this.jwtService.sign(
