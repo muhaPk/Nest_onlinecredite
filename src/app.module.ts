@@ -8,9 +8,14 @@ import { join } from 'path';
 import { GraphQLUpload } from 'graphql-upload';
 
 import { AppController } from './app.controller';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
     imports: [
+      ConfigModule.forRoot({
+        isGlobal: true,
+        envFilePath: process.env.NODE_ENV === 'production' ? '.env.production' : '.env',
+      }),
       GraphQLModule.forRoot<ApolloDriverConfig>({
         driver: ApolloDriver,
         autoSchemaFile: join(process.cwd(), './schema.gql'),
