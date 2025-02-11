@@ -35,6 +35,8 @@ export class UsersResolver {
     @Args('idPassport', { nullable: true }) idPassport?: string,
     @Args('email', { nullable: true }) email?: string,
     @Args('name', { nullable: true }) name?: string,
+    @Args('surname', { nullable: true }) surname?: string,
+    @Args('avatar', { nullable: true }) avatar?: string,
     @Args('phone', { nullable: true }) phone?: string,
     @Args('imgPassport', { nullable: true }) imgPassport?: string,
     @Args('isVerified', { nullable: true }) isVerified?: boolean,
@@ -46,6 +48,8 @@ export class UsersResolver {
     if (idPassport) queryParams.idPassport = idPassport;
     if (email) queryParams.email = email;
     if (name) queryParams.name = name;
+    if (surname) queryParams.surname = surname;
+    if (avatar) queryParams.avatar = avatar;
     if (phone) queryParams.phone = phone;
     if (imgPassport) queryParams.imgPassport = imgPassport;
     if (isVerified) queryParams.isVerified = isVerified;

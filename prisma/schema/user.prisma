@@ -3,10 +3,14 @@ model User {
   idPassport  String?     @unique @map("id_passport")
   name        String?
   surname     String?
+  avatar      String?
   email       String?  @unique
   phone       String?  @unique
   imgPassport String?
   isVerified  Boolean  @default(false)
+  provider    String?  // (Google, Facebook, etc.)
+  providerId  String?  @unique // to store Google ID
+  refreshToken String?
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 

@@ -13,6 +13,9 @@ export class CreateUserInput {
   surname?: string
 
   @Field({ nullable: true })
+  avatar?: string
+
+  @Field({ nullable: true })
   email?: string
 
   @Field({ nullable: true })
