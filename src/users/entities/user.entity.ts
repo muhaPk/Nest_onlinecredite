@@ -16,6 +16,9 @@ export class User {
   surname: string
 
   @Field()
+  avatar: string
+
+  @Field()
   email: string
 
   @Field()

@@ -17,6 +17,7 @@ export class UsersService {
         email: true,
         name: true,
         surname: true,
+        avatar: true,
         phone: true,
         imgPassport: true,
         isVerified: true,
@@ -82,6 +83,9 @@ export class UsersService {
     if (updateUserInput.surname) {
       data.surname = updateUserInput.surname;
     }
+    if (updateUserInput.avatar) {
+      data.avatar = updateUserInput.avatar;
+    }
     if (updateUserInput.phone) {
       data.phone = updateUserInput.phone;
     }
@@ -101,6 +105,7 @@ export class UsersService {
         email: true,
         name: true,
         surname: true,
+        avatar: true,
         phone: true,
         imgPassport: true,
         isVerified: true,
@@ -129,6 +134,7 @@ export class UsersService {
         email: true,
         name: true,
         surname: true,
+        avatar: true,
         phone: true,
         imgPassport: true,
         createdAt: true,

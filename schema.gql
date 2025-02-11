@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 input CreateUserInput {
+  avatar: String
   email: String
   idPassport: String
   imgPassport: String
@@ -19,6 +20,7 @@ scalar DateTime
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  googleAuth(token: String!): String!
   removeUser(id: Int!): User!
   sendOtp(phone: String!): Boolean!
   updateUser(updateUserInput: UpdateUserInput!): User!
@@ -27,11 +29,12 @@ type Mutation {
 }
 
 type Query {
-  user(email: String, id: Int, idPassport: String, imgPassport: String, isVerified: Boolean, name: String, phone: String): User
+  user(avatar: String, email: String, id: Int, idPassport: String, imgPassport: String, isVerified: Boolean, name: String, phone: String, surname: String): User
   users: [User!]!
 }
 
 input UpdateUserInput {
+  avatar: String
   email: String
   id: Int!
   idPassport: String
@@ -46,6 +49,7 @@ input UpdateUserInput {
 scalar Upload
 
 type User {
+  avatar: String!
   createdAt: DateTime!
   email: String!
   id: Int!
