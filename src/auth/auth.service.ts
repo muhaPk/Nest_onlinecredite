@@ -3,8 +3,7 @@ import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma.service';
 // import Twilio from 'twilio';
-import { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN } from '../config/consts';
-import { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } from '../config/consts';
+import { TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } from '../config/consts';
 
 @Injectable()
 export class AuthService {
@@ -119,6 +118,30 @@ export class AuthService {
       throw new UnauthorizedException('Invalid refresh token');
     }
   }
+
+
+  async validateGoogleUser(profile: { email: string; name: string; avatar: string; providerId: string, refreshToken?: string }) {
+    let user = await this.prisma.user.findUnique({ where: { email: profile.email } });
+
+    if (!user) {
+      user = await this.prisma.user.create({
+        data: {
+          email: profile.email,
+          name: profile.name,
+          avatar: profile.avatar,
+          provider: 'google',
+          providerId: profile.providerId,
+          refreshToken: profile.refreshToken || null, // Save refresh token (optional)
+        },
+      });
+    }
+
+    const payload = { userId: user.id, email: user.email };
+    const accessToken = this.jwtService.sign(payload);
+
+    return { accessToken, user };
+}
+
 
 
 }
