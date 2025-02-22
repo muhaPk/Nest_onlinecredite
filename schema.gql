@@ -49,17 +49,17 @@ input UpdateUserInput {
 scalar Upload
 
 type User {
-  avatar: String!
-  createdAt: DateTime!
-  email: String!
+  avatar: String
+  createdAt: DateTime
+  email: String
   id: Int!
-  idPassport: String!
-  imgPassport: String!
-  isVerified: Boolean!
-  name: String!
-  phone: String!
-  surname: String!
-  updatedAt: DateTime!
+  idPassport: String
+  imgPassport: String
+  isVerified: Boolean
+  name: String
+  phone: String
+  surname: String
+  updatedAt: DateTime
 }
 
 type VerifyOtpResponse {

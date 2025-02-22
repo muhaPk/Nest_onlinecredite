@@ -6,33 +6,33 @@ export class User {
   @Field(() => Int)
   id: number
 
-  @Field()
-  idPassport: string | null
+  @Field({ nullable: true })
+  idPassport: string
 
-  @Field()
+  @Field({ nullable: true })
   name: string
 
-  @Field()
+  @Field({ nullable: true })
   surname: string
 
-  @Field()
+  @Field({ nullable: true })
   avatar: string
 
-  @Field()
+  @Field({ nullable: true })
   email: string
 
-  @Field()
+  @Field({ nullable: true })
   phone: string
 
-  @Field()
+  @Field({ nullable: true })
   imgPassport: string
 
-  @Field()
+  @Field({ nullable: true })
   isVerified: boolean
 
-  @Field()
+  @Field({ nullable: true })
   createdAt: Date
 
-  @Field()
+  @Field({ nullable: true })
   updatedAt: Date
 }

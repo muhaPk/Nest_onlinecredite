@@ -128,10 +128,10 @@ export class AuthService {
         data: {
           email: profile.email,
           name: profile.name,
-          avatar: profile.avatar,
+          avatar: profile.avatar || 'N/A',
           provider: 'google',
           providerId: profile.providerId,
-          refreshToken: profile.refreshToken || null, // Save refresh token (optional)
+          refreshToken: profile.refreshToken || 'N/A', // Save refresh token (optional)
         },
       });
     }

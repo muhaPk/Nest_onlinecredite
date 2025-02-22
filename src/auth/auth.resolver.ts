@@ -27,6 +27,9 @@ export class AuthResolver {
   // google auth
   @Mutation(() => String)
   async googleAuth(@Args('token') token: string): Promise<string> {
+
+    console.log('token ' + token)
+
     const ticket = await this.client.verifyIdToken({
       idToken: token,
       audience: GOOGLE_CLIENT_ID,
